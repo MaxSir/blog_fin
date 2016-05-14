@@ -8,6 +8,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use app\models\User;
 
 AppAsset::register($this);
 ?>
@@ -35,13 +36,14 @@ AppAsset::register($this);
     ]);
     $menu = Yii::$app->user->isGuest ?
         [
-            ['label' => 'Войти', 'url' => ['/site/login']]
+                ['label' => 'Войти', 'url' => ['/site/login']],
+                ['label' => 'Регистрация', 'url' => ['/user/create'], 'linkOptions' => ['data-method' => 'post'],],           
         ]
         :
         [
             ['label' => 'Добавить запись', 'url' => ['/blog/create']],
             [
-                'label' => 'Уйти (' . Yii::$app->user->identity->username . ')',
+                'label' => 'Выйти (' . Yii::$app->user->identity->username . ')',
                 'url' => ['/site/logout'],
                 'linkOptions' => ['data-method' => 'post'],
             ],
@@ -63,7 +65,7 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; Мегаблог <?= date('Y') ?></p>
+        <p class="pull-left">&copy; DeadBlog !!!<?= date('Y') ?></p>
 
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>

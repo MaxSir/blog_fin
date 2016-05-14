@@ -25,6 +25,9 @@ class User extends ActiveRecord implements IdentityInterface
      * Validate constant
      */
     const MIN_LENGTH_PASS = 6;
+    const IMAGE_MAX_LENGTH = 255;
+
+    public $imageFile;
 
     /**
      * @inheritdoc
@@ -42,8 +45,10 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             [['username', 'name', 'surname', 'password'], 'required'],
             ['password', 'string', 'min' => self::MIN_LENGTH_PASS],
+            //[['imageFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg', 'on' => 'create'],
             ['username', 'email'],
             ['username', 'unique'],
+            //[['image'], 'string', 'max' => self::IMAGE_MAX_LENGTH]
         ];
     }
 
@@ -54,11 +59,13 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             'id' => _('ID'),
+            'avatar' => ('Аватар'),
             'name' => _('Имя'),
             'surname' => _('Фамилия'),
             'password' => _('Пароль'),
             'salt' => _('Соль'),
             'access_token' => _('Ключ авторизации'),
+            'create_date' => _('Дата создания'),
         ];
     }
 
@@ -190,4 +197,18 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->auth_key = Yii::$app->security->generateRandomString();
     }
+
+    /*public static function saveAvatarAndModel($model, $post)
+    {
+        if ($model->load($post)) {
+            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+            if($model->imageFile->baseName)
+            {
+                $model->avatar = 'images/' . md5($model->imageFile->baseName . time()) . '.' . $model->imageFile->extension;
+                file_put_contents(Yii::getAlias('@app/web/' . $model->avatar), file_get_contents($model->imageFile->tempName));
+            }
+            return ($model->validate() && $model->save());
+        }
+        return false;
+    }*/
 }

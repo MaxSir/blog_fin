@@ -28,7 +28,8 @@ $this->params['breadcrumbs'][] = $this->title;
         <span><?=$model->article?></span>
     </div>
     <div style="margin: 20px">
-        <b>Автор:</b> <?=$model->user->surname . ' ' . $model->user->name ?>
+        <b>Автор:</b> <?=$model->user->surname . ' ' . $model->user->name ?> <br>
+        <b>Дата создания: </b> <?=$model->user->create_date?>
     </div>
     <hr>
     <div>
